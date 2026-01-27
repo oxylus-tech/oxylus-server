@@ -1,0 +1,116 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poetry]
+name = "oxylus-server"
+description = "The Oxylus framework server."
+version = "0.0.1"
+authors = ["Thomas Baquet <thomas oxylus app>"]
+readme = "README.rst"
+license = "GPL-3.0-or-later"
+packages = [
+    { include = "ox_server" },
+]
+include = [
+    # assets are provided as npm packages
+    # {path="assets", format="sdist"},
+    {path="docs", format="sdist"},
+    {path="tests", format="sdist"},
+]
+exclude = [
+]
+
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Oxylus",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.13"
+Django = "^5"
+djangorestframework = "^3"
+drf-spectacular = "^0.28.0"
+dynaconf = {extras = ["yaml"], version = "^3.2.11"}
+oxylus = "^0.0"
+
+
+[tool.poetry.group.prod.dependencies]
+psycopg = "^3.2.10"
+gunicorn = "^23.0.0"
+
+[tool.poetry.group.dev.dependencies]
+ipython = "*"
+pre-commit = "*"
+black = "*"
+ruff = "*"
+
+# We assume for development that theses paths exists
+oxylus= { path = "../oxylus", develop = true }
+oxylus_erp = { path = "../oxylus-erp", develop = true }
+
+
+[tool.poetry.group.docs.dependencies]
+Sphinx = "*"
+# sphinx-js = "*"
+sphinx-rtd-theme = "*"
+sphinx-autodoc-typehints = "*"
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "ox.settings.test"
+OX_ENV = "tests"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
+testpaths = ["tests"]
+
+
+[tool.black]
+line-length = 120
+exclude = '''
+    /(
+          \.egg
+        | \.git
+        | \.hg
+        | \.tox
+        | \._build
+        | \.build
+        | \.bulk-out
+        | \.dist
+        | \.__pycache__
+        | \.venv
+        | \.migrations
+        | \.static
+        | \.ox/settings
+        | \.scripts
+    )
+'''
+
+
+[tool.ruff]
+line-length = 120
+exclude = [
+    "egg",
+    "git",
+    "hg",
+    "tox",
+    "_build",
+    "build",
+    "dist",
+    "__pycache__",
+    "venv",
+    "*/migrations",
+    "*/static",
+    "ox/settings",
+    "scripts/",
+]
+
+
+[tool.semantic_release]
+version_variables = ["ox/__init__.py:__version__"]
+version_toml = [
+    "pyproject.toml:tool.poetry.version",
+]
