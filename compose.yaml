@@ -25,18 +25,20 @@ x-oxylus-simple-container: &oxylus-simple-container
   environment:
     <<: *common-env
   volumes:
+    - oxylus: /srv/oxylus
     - oxylus-static:/srv/oxylus/static
     - oxylus-conf:/etc/oxylus/
+    - oxylus-venv:/etc/oxylus/.venv
   depends_on:
     - db
 
-# -- Container to use for oxylus services (awaiting init)
+# -- Container to use for oxylus services (awaiting setup)
 x-oxylus-container: &oxylus-container
   <<: *oxylus-simple-container
   depends_on: &oxylus-container-depends
     db:
         condition: service_started
-    oxylus-init:
+    oxylus-setup:
         condition: service_completed_successfully
 
 
@@ -61,7 +63,7 @@ services:
     command: server
     environment:
       <<: *common-env
-      OX_DEBUG: true
+      OX_DEBUG: false
     ports:
         - "8001:8001"
     depends_on:
@@ -69,9 +71,9 @@ services:
       oxylus-tasks:
           condition: service_started
 
-  oxylus-init:
+  oxylus-setup:
     <<: *oxylus-simple-container
-    command: init
+    command: setup
 
   oxylus-dav:
     <<: *oxylus-container
