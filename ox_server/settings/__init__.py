@@ -17,7 +17,8 @@ from dynaconf import Dynaconf
 ENV = os.environ.get("OX_ENV", "production")
 
 if ENV == "production":
-    BASE_DIR = Path("/srv/http/oxylus")
+    BASE_DIR = Path("/srv/oxylus")
+    DEBUG = False
 else:
     BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -36,8 +37,8 @@ settings = Dynaconf(
         OX["SETTINGS_DIR"] / ".*",
         OX["SETTINGS_DIR"] / "tmp" / "*",
         # "/etc/oxylus/apps/*",
-        "/etc/oxylus/conf/*",
-        "/etc/oxylus/conf/.*",
+        "/etc/oxylus/*.yaml",
+        "/etc/oxylus/.*.yaml",
     ],
     envvar_prefix="OX",
     merge_enabled=True,
@@ -49,6 +50,8 @@ settings = Dynaconf(
 
 globals().update(settings.as_dict())
 
+
+BASE_DIR = Path(BASE_DIR)
 
 if plugins := getattr(settings, "PLUGINS_APPS", None):
     plugins = [p for p in plugins.keys() if p not in INSTALLED_APPS]
@@ -64,6 +67,7 @@ USE_L10N = True
 USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+STATICFILES_FINDERS = list(set(STATICFILES_FINDERS))
 
 # Note: we use a generic name to be agnostic with frontend applications
 LANGUAGE_COOKIE_NAME = "lang"

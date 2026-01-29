@@ -4,7 +4,7 @@ import os
 import sys
 
 
-def main():
+def main(args=None):
     """Run administrative tasks."""
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ox_server.settings")
     try:
@@ -15,8 +15,10 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    execute_from_command_line(sys.argv)
+
+    execute_from_command_line(args or sys.argv)
 
 
 if __name__ == "__main__":
+
     main()

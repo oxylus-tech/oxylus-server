@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-from ox.core.views import core, accounts
+from ox.apps.core import views as core
 from ox import urls as ox_urls
 
 urlpatterns = list(ox_urls.urlpatterns)

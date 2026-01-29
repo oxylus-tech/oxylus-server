@@ -66,12 +66,11 @@ default:
     - NAME: django.contrib.auth.password_validation.NumericPasswordValidator
 
   STATIC_URL: /static/
-  # STATIC_ROOT: "@format {this.BASE_DIR}/static"
-  STATICFILES_DIRS:
-    - "@format {this.BASE_DIR}/static"
+  STATIC_ROOT: "@format {this.BASE_DIR}/static"
+  #STATICFILES_DIRS:
+  #  - "@format {this.BASE_DIR}/static"
   MEDIA_URL: /media/
   STATICFILES_FINDERS:
-    - ox.core.assets.finders.AssetsFinder
     - django.contrib.staticfiles.finders.FileSystemFinder
     - django.contrib.staticfiles.finders.AppDirectoriesFinder
 
@@ -127,6 +126,10 @@ tests:
       ENGINE: django.db.backends.sqlite3
       NAME: "@format {this.BASE_DIR}/db.test.sqlite3"
 
+  STATICFILES_FINDERS:
+    dynaconf_merge:
+        - ox.core.assets.finders.AssetsFinder
+
 development:
   ALLOWED_HOSTS:
     - localhost
@@ -138,6 +141,10 @@ development:
       ENGINE: django.db.backends.sqlite3
       NAME: "@format {this.BASE_DIR}/db.dev.sqlite3"
 
+  STATICFILES_FINDERS:
+    dynaconf_merge:
+        - ox.core.assets.finders.AssetsFinder
+
 production:
   DEBUG: false
   BASE_DIR: /srv/oxylus
@@ -145,7 +152,9 @@ production:
   SECURE_PROXY_SSL_HEADER: ["HTTP_X_FORWARDED_HOST", "https"]
   ALLOWED_HOSTS:
     - localhost
+    - 127.0.0.1
 
+  STATIC_ROOT: "@format {this.BASE_DIR}/static"
   DATABASES:
     default:
       ENGINE: django.db.backends.postgresql
@@ -157,4 +166,4 @@ production:
 
   OX:
     dynaconf_merge:
-      SETTINGS_DIR: "/etc/oxylus/conf/"
+      SETTINGS_DIR: "/etc/oxylus/"

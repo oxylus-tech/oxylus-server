@@ -3,13 +3,22 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
-[tool.poetry]
+[project]
 name = "oxylus-server"
 description = "The Oxylus framework server."
-version = "0.0.1"
-authors = ["Thomas Baquet <thomas oxylus app>"]
 readme = "README.rst"
 license = "GPL-3.0-or-later"
+
+dynamic = ["version"]
+
+[project.scripts]
+ox-manage = "ox_server.manage:main"
+
+
+[tool.poetry]
+name = "oxylus-server"
+version = "0.0.1"
+authors = ["Thomas Baquet <thomas oxylus app>"]
 packages = [
     { include = "ox_server" },
 ]
@@ -29,19 +38,17 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 
-
 [tool.poetry.dependencies]
 python = "^3.13"
 Django = "^5"
 djangorestframework = "^3"
 drf-spectacular = "^0.28.0"
 dynaconf = {extras = ["yaml"], version = "^3.2.11"}
-oxylus = "^0.0"
+oxylus= { git = "https://github.com/oxylus-tech/oxylus.git", branch="main" }
+oxylus-erp= { git = "https://github.com/oxylus-tech/oxylus-erp.git", branch="main" }
 
-
-[tool.poetry.group.prod.dependencies]
-psycopg = "^3.2.10"
-gunicorn = "^23.0.0"
+[tool.poetry.group.dev]
+optional = true
 
 [tool.poetry.group.dev.dependencies]
 ipython = "*"
@@ -50,9 +57,20 @@ black = "*"
 ruff = "*"
 
 # We assume for development that theses paths exists
-oxylus= { path = "../oxylus", develop = true }
-oxylus_erp = { path = "../oxylus-erp", develop = true }
+# oxylus= { path = "../oxylus", develop = true }
+# oxylus-erp = { path = "../oxylus-erp", develop = true }
 
+
+[tool.poetry.group.prod]
+optional = true
+
+[tool.poetry.group.prod.dependencies]
+psycopg = "^3.2.10"
+gunicorn = "^23.0.0"
+
+
+[tool.poetry.group.docs]
+optional = true
 
 [tool.poetry.group.docs.dependencies]
 Sphinx = "*"
@@ -62,7 +80,7 @@ sphinx-autodoc-typehints = "*"
 
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "ox.settings.test"
+DJANGO_SETTINGS_MODULE = "ox_server.settings.test"
 OX_ENV = "tests"
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
 testpaths = ["tests"]
@@ -84,7 +102,7 @@ exclude = '''
         | \.venv
         | \.migrations
         | \.static
-        | \.ox/settings
+        | \.ox_server/settings
         | \.scripts
     )
 '''
@@ -104,7 +122,7 @@ exclude = [
     "venv",
     "*/migrations",
     "*/static",
-    "ox/settings",
+    "ox_server/settings",
     "scripts/",
 ]
 
