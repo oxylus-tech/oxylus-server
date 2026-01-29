@@ -70,8 +70,6 @@ Usage
 ``run.sh`` is the primary entrypoint for all server operations. You can find more with ``./run.sh help``.
 It wraps Django's ``manage.py`` and provides multiple commands to setup, run, and manage the server.
 
-Commands:
-
 +---------+--------------------------------------------------------------+
 | Command | Description                                                  |
 +=========+==============================================================+
