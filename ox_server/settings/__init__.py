@@ -13,7 +13,8 @@ from pathlib import Path
 
 from dynaconf import Dynaconf
 
-BASE_DIR = Path(os.environ.get("OX_APP_DIR"))
+BASE_DIR = os.environ.get("OX_APP_DIR")
+BASE_DIR = BASE_DIR and Path(BASE_DIR)
 OX_DIR = Path(__file__).resolve().parent.parent
 
 

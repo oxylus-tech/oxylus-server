@@ -6,15 +6,21 @@ CWD=scripts
 echo "🌳 Welcome to Oxylus..."
 echo
 
-poetry run pip install -e ../oxylus
-poetry run pip install -e ../../oxylus-erp
-poetry run ox_server/manage.py vue-i18n
+POETRY_VENV="$(poetry env info -p)"
+SITE_PACKAGE=$POETRY_VENV/lib/python3.13/site-packages
+
+VENV_OX="$SITE_PACKAGE/ox"
+VENV_OXERP="$SITE_PACKAGE/ox_erp"
+if [[ ! -L $PWD/ox ]]; then
+    rm $VENV_OX $VENV_OXERP -rf
+    ln -s `dirname $PWD`/oxylus/ox $PWD/ox
+    ln -s `dirname $PWD`/oxylus-erp/ox_erp $PWD/ox_erp
+fi
+
 
 export OX_ENV=development
 export OX_APP_DIR=./
 
-
-POETRY_VENV="$(poetry env info -p)"
 
 # Activate it in the current shell
 if [ -n "$POETRY_VENV" ]; then

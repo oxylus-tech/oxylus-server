@@ -4,9 +4,9 @@ Oxylus Server
 Overview
 --------
 
-``oxylus-server`` provides the server runtime and instance management for the Oxylus framework. It is a Django-based project that handles the core backend, task scheduling, WebDav services, and Docker deployment. This repository also ships a Docker image and related runtime configuration.
+``oxylus-server`` provides the server runtime and instance management for the Oxylus framework. It is a Django-based project that handles the core backend, task scheduling, WebDAV services, and Docker deployment. This repository also ships a Docker image and related runtime configuration.
 
-The server comes pre-installed with:
+The server comes with dependencies to:
 
 - `oxylus <https://github.com/oxylus-tech/oxylus/>`_ : the core framework and libraries.
 - `oxylus-erp <https://github.com/oxylus-tech/oxylus/>`_ : ERP application built on Oxylus.
@@ -43,6 +43,7 @@ Secrets such as ``SECRET_KEY`` and encryption keys are stored in ``secrets.yaml`
 
    ./run.sh setup
    ./run.sh ox update-secrets
+   ./run.sh ox install ox_erp.locations ox_erp.contacts ox_erp.contacts_mails
 
 Quickstart
 ----------
