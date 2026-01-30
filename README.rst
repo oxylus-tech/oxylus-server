@@ -13,6 +13,10 @@ The server comes with dependencies to:
 
 Future releases will include an improved application installation system.
 
+
+**Important note**: the current installation process is still under development. However building the Dockerfile and running it should be ok. We'll provide it soonish.
+
+
 Directory Structure
 -------------------
 
