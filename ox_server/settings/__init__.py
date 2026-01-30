@@ -50,9 +50,9 @@ settings = Dynaconf(
     ENV_SWITCHER_FOR_DYNACONF="OX_ENV",
     BASE_DIR=BASE_DIR,
     OX=OX,
-).as_dict()
+)
 
-globals().update(settings)
+globals().update(settings.as_dict())
 
 
 BASE_DIR = Path(BASE_DIR)

@@ -138,6 +138,7 @@ development:
       ENGINE: django.db.backends.sqlite3
       NAME: "@format {this.BASE_DIR}/db.dev.sqlite3"
 
+  STATIC_ROOT: "@format {this.BASE_DIR}/collected_statics"
   STATICFILES_DIRS:
     - "@format {this.BASE_DIR}/static"
   
