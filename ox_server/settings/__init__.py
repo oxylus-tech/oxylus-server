@@ -14,7 +14,7 @@ from pathlib import Path
 from dynaconf import Dynaconf
 
 BASE_DIR = os.environ.get("OX_APP_DIR")
-BASE_DIR = BASE_DIR and Path(BASE_DIR)
+BASE_DIR = BASE_DIR and Path(BASE_DIR).resolve()
 OX_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -26,7 +26,7 @@ if ENV == "production":
     SETTINGS_DIR = Path("/etc/oxylus")
     DEBUG = False
 else:
-    BASE_DIR = BASE_DIR or Path(__file__).resolve().parent.parent.parent
+    BASE_DIR = BASE_DIR or Path(__file__).resolve().parent.parent.parent.resolve()
     SETTINGS_DIR = Path(BASE_DIR / "conf")
 
 
@@ -50,9 +50,9 @@ settings = Dynaconf(
     ENV_SWITCHER_FOR_DYNACONF="OX_ENV",
     BASE_DIR=BASE_DIR,
     OX=OX,
-)
+).as_dict()
 
-globals().update(settings.as_dict())
+globals().update(settings)
 
 
 BASE_DIR = Path(BASE_DIR)

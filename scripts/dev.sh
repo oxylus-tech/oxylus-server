@@ -21,7 +21,6 @@ fi
 export OX_ENV=development
 export OX_APP_DIR=./
 
-
 # Activate it in the current shell
 if [ -n "$POETRY_VENV" ]; then
     # shellcheck disable=SC1090

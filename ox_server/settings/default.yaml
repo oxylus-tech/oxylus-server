@@ -66,9 +66,6 @@ default:
     - NAME: django.contrib.auth.password_validation.NumericPasswordValidator
 
   STATIC_URL: /static/
-  STATIC_ROOT: "@format {this.BASE_DIR}/static"
-  #STATICFILES_DIRS:
-  #  - "@format {this.BASE_DIR}/static"
   MEDIA_URL: /media/
   STATICFILES_FINDERS:
     - django.contrib.staticfiles.finders.FileSystemFinder
@@ -141,6 +138,9 @@ development:
       ENGINE: django.db.backends.sqlite3
       NAME: "@format {this.BASE_DIR}/db.dev.sqlite3"
 
+  STATICFILES_DIRS:
+    - "@format {this.BASE_DIR}/static"
+  
   STATICFILES_FINDERS:
     dynaconf_merge:
         - ox.core.assets.finders.AssetsFinder
