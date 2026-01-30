@@ -1,0 +1,8 @@
+default:
+  PLUGINS_APPS:
+    ox_erp.contacts:
+      as_dependency: false
+    ox_erp.contacts_mails:
+      as_dependency: false
+    ox_erp.locations:
+      as_dependency: false
